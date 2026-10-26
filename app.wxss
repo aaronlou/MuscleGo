@@ -1,0 +1,28 @@
+page {
+  --ink: #23453b;
+  --muted: #6f7872;
+  --paper: #f5f6f2;
+  --card: #ffffff;
+  --orange: #d96b43;
+  --line: #e3e7e1;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "PingFang SC", "Noto Sans CJK SC", sans-serif;
+  font-size: 30rpx;
+}
+view, text, button, scroll-view { box-sizing: border-box; }
+button { padding: 0; margin: 0; line-height: inherit; border-radius: 0; }
+button::after { border: 0; }
+.page { min-height: 100vh; padding: 0 36rpx 64rpx; }
+.nav-space { width: 100%; }
+.navbar { height: 88rpx; display: flex; align-items: center; justify-content: space-between; }
+.navbar-title { font-size: 32rpx; font-weight: 600; }
+.display { font-family: inherit; font-weight: 600; }
+.muted { color: var(--muted); }
+.card { background: var(--card); border: 2rpx solid var(--line); border-radius: 22rpx; }
+.primary-btn { height: 100rpx; border-radius: 18rpx; display: flex; align-items: center; justify-content: center; background: var(--ink); color: #fff; font-size: 31rpx; font-weight: 600; }
+.primary-btn.orange { background: var(--ink); }
+.primary-btn.disabled { opacity: .45; }
+.text-btn { color: var(--ink); font-size: 25rpx; background: transparent; }
+.tag { display: inline-flex; align-items: center; height: 44rpx; padding: 0 18rpx; border-radius: 8rpx; background: #e9eeea; color: var(--ink); font-size: 22rpx; }
+.safe-bottom { height: calc(24rpx + env(safe-area-inset-bottom)); }

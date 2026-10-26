@@ -1,0 +1,15 @@
+<view class="workout-page">
+  <view style="height: {{statusBarHeight}}px"></view>
+  <view class="workout-nav"><button class="close-btn" bindtap="exitWorkout">×</button><text>{{workout.title}}</text><text class="count">{{index + 1}} / {{workout.exercises.length}}</text></view>
+  <view class="progress-track"><view class="progress-value" style="width: {{(index + 1) / workout.exercises.length * 100}}%"></view></view>
+  <view class="workout-content">
+    <view class="workout-label">第 {{index + 1}} 个动作 · {{current.part}}</view>
+    <view class="workout-title">{{current.name}}</view>
+    <view class="workout-reps">{{current.reps}}</view>
+    <button class="timer-panel" bindtap="toggleTimer" hover-class="timer-panel-hover"><view class="timer-status"><text class="timer-state">{{running ? '计时中' : remaining === current.seconds ? '准备开始' : '已暂停'}}</text><text class="timer-tip">轻触{{running ? '暂停' : '开始'}}</text></view><view class="timer-value"><text class="timer-number">{{remaining}}</text><text class="timer-unit">秒</text></view><view class="timer-progress"><view class="timer-progress-fill" style="width: {{current.seconds ? (current.seconds - remaining) / current.seconds * 100 : 0}}%"></view></view></button>
+    <text class="timer-hint">按自己的节奏完成，不必赶时间</text>
+    <view class="form-guide"><view class="guide-head">动作要点</view><view wx:for="{{current.cues}}" wx:key="*this" class="guide-item"><text class="guide-index">{{index + 1}}.</text><text>{{item}}</text></view><view class="caution">{{current.warning}}</view></view>
+  </view>
+  <view class="workout-actions"><button class="prev-btn" bindtap="previousExercise" disabled="{{index === 0}}">上一个</button><button class="next-btn" bindtap="nextExercise">{{index === workout.exercises.length - 1 ? '完成并打卡' : '完成，下一个'}}</button></view>
+  <view wx:if="{{finished}}" class="finish-layer"><view class="finish-content"><view class="finish-badge">✓</view><view class="finish-title">今日训练已完成</view><text class="finish-copy">打卡成功，记得补充水分</text><view class="finish-stats"><view><text>{{workout.minutes}}</text><text>训练分钟</text></view><view><text>{{workout.exercises.length}}</text><text>完成动作</text></view><view><text>{{summary.streak}}</text><text>连续天数</text></view></view><button class="primary-btn" bindtap="backToday">返回首页</button><button class="records-link" bindtap="viewRecords">查看训练记录</button></view></view>
+</view>

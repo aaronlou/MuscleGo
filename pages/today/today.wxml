@@ -1,0 +1,23 @@
+<view class="page">
+  <view class="nav-space" style="height: {{statusBarHeight}}px"></view>
+  <view class="navbar"><text class="brand">MuscleGo</text><text class="streak-mini">已连续 {{summary.streak || 0}} 天</text></view>
+  <view class="welcome">
+    <text class="welcome-date">{{dateText}}</text>
+    <view class="welcome-title">{{greeting}}，准备活动一下</view>
+  </view>
+  <view class="hero">
+    <text class="hero-label">今日训练</text>
+    <view class="hero-title">{{workout.title}}</view>
+    <view class="hero-meta"><text>{{workout.minutes}} 分钟</text><text>{{workout.exercises.length}} 个动作</text><text>低冲击</text></view>
+    <button class="start-btn" bindtap="startWorkout"><text>{{completed ? '再练一次' : '开始训练'}}</text><text>→</text></button>
+    <view wx:if="{{completed}}" class="done-note">✓ 今日已打卡</view>
+  </view>
+  <view class="week-section">
+    <view class="section-head"><text class="section-title">本周打卡</text></view>
+    <view class="week-row"><view wx:for="{{week}}" wx:key="day" class="day-cell {{item.today ? 'today' : ''}}"><text class="day-label">周{{item.label}}</text><view class="day-dot {{item.checked ? 'checked' : ''}}">{{item.checked ? '✓' : item.day}}</view></view></view>
+  </view>
+  <view class="section-head exercise-head"><text class="section-title">训练内容</text><button class="text-btn" bindtap="openPlan">查看周计划</button></view>
+  <view class="exercise-list"><view wx:for="{{workout.exercises}}" wx:key="id" class="exercise-card card" bindtap="startWorkout"><view class="exercise-order">{{item.order}}</view><view class="exercise-info"><text class="exercise-name">{{item.name}}</text><text class="exercise-part">{{item.part}} · {{item.reps}}</text></view><text class="exercise-go">›</text></view></view>
+  <view class="kind-note"><text>如有胸痛、眩晕或明显不适，请立即停止训练。</text></view>
+  <view class="safe-bottom"></view>
+</view>

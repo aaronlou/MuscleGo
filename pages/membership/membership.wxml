@@ -1,0 +1,6 @@
+<view class="member-page">
+  <view style="height: {{statusBarHeight}}px"></view>
+  <view class="member-nav"><button bindtap="goBack">‹</button><text>会员服务</text><text></text></view>
+  <view class="member-header"><view class="member-heading">选择会员套餐</view><text class="member-header-copy">完整训练计划、训练统计与锻炼提醒</text></view>
+  <view class="checkout"><view class="plan-options"><view wx:for="{{plans}}" wx:key="id" data-index="{{index}}" bindtap="selectPlan" class="plan-option {{selected === index ? 'selected' : ''}}"><view wx:if="{{item.badge}}" class="plan-badge">{{item.badge}}</view><view class="radio"><view></view></view><view class="plan-copy"><text>{{item.name}}</text><text>{{item.description}}</text></view><view class="price"><text>¥</text><text>{{item.price}}</text></view></view></view><view wx:if="{{plans[selected].autoRenew}}" class="renew-note">每个季度自动续费 ¥68，扣款前以微信支付通知为准，可随时关闭。</view><view class="agreement"><view class="checkbox {{agreed ? 'checked' : ''}}" bindtap="toggleAgreement">{{agreed ? '✓' : ''}}</view><text>我已阅读并同意</text><button bindtap="showAgreement">《会员服务与续费说明》</button></view><button class="pay-btn {{paying ? 'disabled' : ''}}" bindtap="pay"><text>{{paying ? '正在处理…' : '微信支付'}}</text><text wx:if="{{!paying}}">¥{{plans[selected].price}}</text></button><view class="secure-note">支付由微信支付提供安全保障</view></view>
+</view>

@@ -1,0 +1,10 @@
+<view class="page">
+  <view class="nav-space" style="height: {{statusBarHeight}}px"></view>
+  <view class="navbar"><text class="navbar-title">一周计划</text><text class="plan-duration">每天 10–20 分钟</text></view>
+  <view class="day-picker"><view wx:for="{{weekly}}" wx:key="title" data-day="{{index}}" bindtap="selectDay" class="day-option {{selected === index ? 'selected' : ''}}"><text class="day-week">周{{item.short}}</text><text class="day-focus">{{item.focus}}</text></view></view>
+  <view class="plan-summary card"><view><text class="plan-week">周{{weekly[selected].short}}训练</text><view class="plan-name">{{workout.title}}</view><text class="plan-sub">{{workout.exercises.length}} 个动作 · 低冲击</text></view><view class="time-stamp"><text class="time-number">{{workout.minutes}}</text><text>分钟</text></view></view>
+  <view class="section-label"><text>动作安排</text><text class="muted">点击查看动作要点</text></view>
+  <view class="plan-list"><view wx:for="{{workout.exercises}}" wx:key="id" class="plan-exercise card"><view class="exercise-row" data-index="{{index}}" bindtap="toggleExercise"><view class="order">{{index + 1}}</view><view class="exercise-main"><text class="exercise-title">{{item.name}}</text><text class="exercise-desc">{{item.part}} · {{item.reps}}</text></view><view class="expand">{{activeExercise === index ? '−' : '+'}}</view></view><view wx:if="{{activeExercise === index}}" class="exercise-detail"><view class="detail-line"></view><view wx:for="{{item.cues}}" wx:for-item="cue" wx:key="*this" class="cue"><text>{{index + 1}}.</text><text>{{cue}}</text></view><text class="warning">{{item.warning}}</text></view></view></view>
+  <view class="principle">建议组间休息 60 秒，呼吸恢复后再继续。</view>
+  <view class="bottom-action"><button class="primary-btn" bindtap="startWorkout">开始这组训练</button></view>
+</view>

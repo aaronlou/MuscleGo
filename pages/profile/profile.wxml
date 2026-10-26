@@ -1,0 +1,10 @@
+<view class="page">
+  <view class="nav-space" style="height: {{statusBarHeight}}px"></view>
+  <view class="navbar"><text class="navbar-title">我的</text></view>
+  <view class="member-card card" bindtap="openMembership"><view><text class="member-title">{{member ? '会员服务已开通' : '会员服务'}}</text><text class="member-desc">查看套餐、支付与续费方式</text></view><text class="member-arrow">›</text></view>
+  <view class="settings-title">提醒设置</view>
+  <view class="settings-card card"><view class="setting-row"><view class="setting-copy"><text>每日锻炼提醒</text><text>通过微信订阅消息提醒</text></view><switch checked="{{settings.reminder}}" bindchange="toggleReminder" color="#23453B"/></view><view class="setting-row"><view class="setting-copy"><text>提醒时间</text><text>选择方便锻炼的时间</text></view><picker mode="time" value="{{settings.reminderTime}}" bindchange="changeTime"><view class="time-picker">{{settings.reminderTime}} <text>›</text></view></picker></view></view>
+  <view class="settings-title">其他</view>
+  <view class="settings-card card"><button class="link-row" bindtap="showSafety"><text>训练安全须知</text><text>›</text></button><button class="link-row" bindtap="showPrivacy"><text>隐私与数据说明</text><text>›</text></button></view>
+  <view class="safe-bottom"></view>
+</view>
