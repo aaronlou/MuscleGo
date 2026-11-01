@@ -18,12 +18,17 @@ Page({
     const calendar = Array.from({ length: prefix }, () => ({ blank: true }))
     for (let day = 1; day <= days; day += 1) {
       const key = `${year}-${pad(monthIndex + 1)}-${pad(day)}`
-      calendar.push({ day, key, checked: !!state.records[key], today: key === today })
+      const record = state.records[key]
+      calendar.push({ day, key, checked: !!record, light: record && record.type === 'light', today: key === today })
     }
     const records = Object.values(state.records).filter(item => {
       const date = new Date(item.completedAt)
       return date.getFullYear() === year && date.getMonth() === monthIndex
-    }).sort((a, b) => b.completedAt - a.completedAt).map(item => ({ ...item, label: `${Number(item.date.slice(5, 7))}月${Number(item.date.slice(8))}日` }))
+    }).sort((a, b) => b.completedAt - a.completedAt).map(item => ({
+      ...item,
+      label: `${Number(item.date.slice(5, 7))}月${Number(item.date.slice(8))}日`,
+      completionLabel: item.type === 'light' ? '轻量完成' : '完整训练'
+    }))
     this.setData({ year, month: monthIndex + 1, cursorYear: year, cursorMonth: monthIndex, calendar, records, monthCount: records.length, summary: store.getSummary() })
   },
   changeMonth(event) {

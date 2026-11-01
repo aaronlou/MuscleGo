@@ -17,9 +17,23 @@ const weekly = [
   { short: '六', focus: '灵活', title: '灵活与轻力量', subtitle: '适度锻炼，也给身体留白', minutes: 12, exercises: ['hinge', 'balance', 'bridge'] }
 ]
 
-function getWorkout(dayIndex = new Date().getDay()) {
+function getWorkout(dayIndex = new Date().getDay(), mode = 'standard') {
   const day = weekly[dayIndex]
-  return { ...day, dayIndex, exercises: day.exercises.map((key, index) => ({ ...library[key], id: key, order: index + 1 })) }
+  const quick = mode === 'quick'
+  const exerciseKeys = quick ? day.exercises.slice(0, 2) : day.exercises
+  return {
+    ...day,
+    dayIndex,
+    mode,
+    minutes: quick ? 3 : day.minutes,
+    exercises: exerciseKeys.map((key, index) => ({
+      ...library[key],
+      id: key,
+      order: index + 1,
+      seconds: quick ? 45 : library[key].seconds,
+      reps: quick ? (key === 'balance' ? '左右各 20 秒' : '1 组 × 8 次') : library[key].reps
+    }))
+  }
 }
 
 module.exports = { weekly, getWorkout }

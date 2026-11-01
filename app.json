@@ -5,7 +5,8 @@
     "pages/records/records",
     "pages/profile/profile",
     "pages/workout/workout",
-    "pages/membership/membership"
+    "pages/membership/membership",
+    "pages/partners/partners"
   ],
   "window": {
     "navigationStyle": "custom",

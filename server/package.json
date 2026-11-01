@@ -1,0 +1,13 @@
+{
+  "name": "musclego-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MuscleGo 训练同步与锻炼搭子服务端",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node --test *.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

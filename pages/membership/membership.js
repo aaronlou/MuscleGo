@@ -39,7 +39,7 @@ Page({
     } catch (error) {
       wx.hideLoading()
       const cancelled = error.errMsg && error.errMsg.includes('cancel')
-      wx.showModal({ title: cancelled ? '已取消支付' : '暂时无法支付', content: cancelled ? '订单未支付，你可以稍后重试。' : (error.message === '服务尚未配置' ? '请先配置服务端支付接口。真实支付与自动扣款不会在客户端模拟。' : '请稍后重试，如已扣款请联系客服核查。'), showCancel: false })
+      wx.showModal({ title: cancelled ? '已取消支付' : '暂时无法支付', content: cancelled ? '订单未支付，你可以稍后重试。' : (error.message || '请稍后重试，如已扣款请联系客服核查。'), showCancel: false })
     } finally {
       this.setData({ paying: false })
     }

@@ -1,0 +1,23 @@
+<view class="page">
+  <view class="nav-space" style="height: {{statusBarHeight}}px"></view>
+  <view class="navbar"><button class="back-btn" bindtap="goBack">‹</button><text class="navbar-title">锻炼搭子</text><text class="nav-side"></text></view>
+  <view class="intro"><view class="intro-title">有人陪伴，更容易坚持</view><text>只分享每周进度，偶尔发出一起练邀请，不比较训练强度</text></view>
+  <view wx:if="{{showConsent}}" class="empty-card card"><view class="empty-title">开启锻炼搭子</view><text class="empty-copy">开启后，将通过微信登录同步你的昵称和打卡进度，仅用于你与搭子互相查看。普通训练不会上传。</text><button class="primary-btn" bindtap="enablePartners">同意并开启</button></view>
+  <block wx:else>
+  <view wx:if="{{loading}}" class="state-card card">正在加载搭子进度…</view>
+  <view wx:elif="{{error}}" class="state-card card"><text>{{error}}</text><button bindtap="loadPartners">重新加载</button><button open-type="share">仍可先邀请好友</button></view>
+  <block wx:else>
+    <view wx:if="{{incomingNudges.length}}" class="nudge-inbox card"><view class="nudge-inbox-title">搭子在等你</view><view wx:for="{{incomingNudges}}" wx:key="id" class="nudge-item"><view class="nudge-copy"><text>{{item.fromNickname}}想和你一起练 3 分钟</text><text>不用换衣服，做一点就很好</text></view><view class="nudge-actions"><button class="rest-btn" data-id="{{item.id}}" data-status="rest" bindtap="respondNudge">今天休息</button><button class="go-btn" data-id="{{item.id}}" data-status="training" bindtap="respondNudge">去练 3 分钟</button></view></view></view>
+    <view wx:if="{{partners.length}}" class="shared-card"><text>本周一起完成</text><view><text class="shared-number">{{totalWeekCount}}</text><text>次训练</text></view><text class="shared-caption">各自完成每周 4 天，就是很好的互相支持</text></view>
+    <view wx:if="{{partners.length}}" class="person-list">
+      <view class="person-card card self-card"><view class="person-top"><text class="person-name">我</text><text class="person-count">{{me.weekCount}}/4 天</text></view><view class="progress-dots"><view wx:for="{{me.progress}}" wx:for-item="done" wx:key="index" class="progress-dot {{done ? 'done' : ''}}"></view></view></view>
+      <view wx:for="{{partners}}" wx:key="id" class="person-card card"><view class="person-top"><view><text class="person-name">{{item.nickname}}</text><text class="today-status">{{item.todayStatus}}</text></view><text class="person-count">{{item.weekCount}}/4 天</text></view><view class="progress-dots"><view wx:for="{{item.progress}}" wx:for-item="done" wx:key="index" class="progress-dot {{done ? 'done' : ''}}"></view></view><view class="partner-actions"><button class="remove-btn" data-id="{{item.id}}" bindtap="remove">解除搭子</button><button class="cheer-btn {{item.nudgedToday || item.cheeredToday ? 'cheered' : ''}}" data-id="{{item.id}}" data-kind="{{item.actionKind}}" bindtap="partnerAction">{{item.actionLabel}}</button></view></view>
+      <button class="invite-more" open-type="share">邀请更多朋友加入</button>
+    </view>
+    <view wx:else class="empty-card card"><view class="empty-title">找一位熟人一起坚持</view><text class="empty-copy">彼此看看每周进度，偶尔送一句加油。不排名，也不制造压力。</text><button class="primary-btn" open-type="share">邀请微信好友</button></view>
+    <button wx:if="{{enabled}}" class="nickname-btn" bindtap="editNickname">搭子看到的昵称：{{myNickname}}　修改</button>
+    <view class="privacy-note">仅同步昵称、每周打卡天数、今日是否打卡和一起练回应。解除关系后立即停止共享。</view>
+    <view wx:if="{{!configured}}" class="service-note">当前可直接分享邀请；接受邀请、同步进度和送出鼓励需配置服务端后使用。</view>
+  </block>
+  </block>
+</view>

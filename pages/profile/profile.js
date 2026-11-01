@@ -32,8 +32,12 @@ Page({
       store.saveSettings({ reminder: true })
       this.setData({ 'settings.reminder': true })
       if (config.apiBaseUrl) {
-        await api.scheduleReminder(this.data.settings.reminderTime)
-        wx.showToast({ title: '提醒已设置', icon: 'success' })
+        const result = await api.scheduleReminder(this.data.settings.reminderTime)
+        if (result && result.scheduled === false) {
+          wx.showModal({ title: '提醒偏好已保存', content: result.message || '服务端尚未配置微信订阅消息，当前不会发送通知。', showCancel: false })
+        } else {
+          wx.showToast({ title: '提醒已设置', icon: 'success' })
+        }
       } else {
         wx.showModal({ title: '提醒偏好已保存', content: '正式推送需接入服务端和订阅消息模板，当前不会发送微信通知。', showCancel: false })
       }
@@ -49,12 +53,16 @@ Page({
     store.saveSettings({ reminderTime })
     this.setData({ 'settings.reminderTime': reminderTime })
     if (this.data.settings.reminder && config.apiBaseUrl) {
-      try { await api.scheduleReminder(reminderTime); wx.showToast({ title: '提醒时间已更新', icon: 'success' }) }
+      try { await api.scheduleReminder(reminderTime); wx.showToast({ title: '提醒时间已保存', icon: 'success' }) }
       catch (error) { wx.showToast({ title: '时间保存成功，同步失败', icon: 'none' }) }
     }
   },
 
+  onShareAppMessage() {
+    return { title: '每天几分钟，一起轻松锻炼、互相陪伴', path: '/pages/today/today?from=invite' }
+  },
+  openPartners() { wx.navigateTo({ url: '/pages/partners/partners' }) },
   openMembership() { wx.navigateTo({ url: '/pages/membership/membership' }) },
   showSafety() { wx.showModal({ title: '训练安全须知', content: '训练前先活动关节，训练中保持自然呼吸。慢性病患者、术后恢复期人群请先咨询医生；出现胸痛、眩晕或明显疼痛时立即停止。', showCancel: false, confirmText: '我知道了' }) },
-  showPrivacy() { wx.showModal({ title: '隐私说明', content: '训练与打卡数据仅保存在当前设备。支付、消息提醒等正式服务接入后，应在隐私协议中明确说明必要数据的用途，并完成用户授权。', showCancel: false }) }
+  showPrivacy() { wx.showModal({ title: '隐私说明', content: '训练与打卡默认仅保存在当前设备。只有你主动开启锻炼搭子后，才会同步昵称及打卡进度用于好友互相查看。支付和提醒等正式服务也应在隐私协议中说明用途并取得授权。', showCancel: false }) }
 })
